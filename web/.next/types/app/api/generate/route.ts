@@ -1,4 +1,4 @@
-// File: /Users/digitalflower/Desktop/butIsItForMe/web/src/app/api/generate/route.ts
+// File: /Users/digitalflower/Desktop/sacredstyles/web/src/app/api/generate/route.ts
 import * as entry from '../../../../../src/app/api/generate/route.js'
 import type { NextRequest } from 'next/server.js'
 

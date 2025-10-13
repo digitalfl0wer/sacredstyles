@@ -37,8 +37,7 @@ export async function callProvider({
     const { runReplicate } = await import('./replicate');
     return runReplicate({ prompt, seed, steps, guidance, aspect, megapixels, lora_scale, signal });
   }
-  const res = await fetch('/api/not-implemented', { method: 'POST', signal });
-  if (!res.ok) throw new Error('Provider failed');
-  const data = (await res.json()) as { imageUrl: string };
-  return { imageUrl: data.imageUrl, meta: { steps: 32, guidance: 4.2, aspect: '3:4' } };
+  throw new Error(
+    `Unsupported generation provider "${provider}". Set NEXT_PUBLIC_GEN_PROVIDER to "mock" or "replicate".`
+  );
 }

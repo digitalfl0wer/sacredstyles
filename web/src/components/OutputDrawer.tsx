@@ -46,10 +46,14 @@ export function OutputDrawer() {
           style={{ padding: 24 }}
         >
           {!imageUrl ? (
-            <div aria-live="polite">Waiting for generation…</div>
+            <div aria-live="polite">Generating portrait… Please wait.</div>
           ) : (
             <div>
-              <img src={imageUrl} alt="Generated portrait" style={{ maxWidth: '100%' }} />
+              <img
+                src={imageUrl}
+                alt={`Portrait style: ${meta?.presetName ?? 'Style'}, ${meta?.colorHex ?? 'Color'}${meta?.length ? `, ${meta?.length}` : ''}`}
+                style={{ maxWidth: '100%' }}
+              />
               <div style={{ marginTop: 8 }}>
                 <button type="button" onClick={() => download(imageUrl!, meta)}>
                   Download

@@ -36,7 +36,10 @@ export async function POST(req: NextRequest) {
       process.env.NODE_ENV !== 'production'
         ? { error: 'Generation failed', details: message }
         : { error: 'Generation failed' };
-    const status = message.includes('Missing Replicate env vars') ? 400 : 500;
+    const status =
+      message.includes('Missing Replicate env vars') || message.includes('Unsupported generation provider')
+        ? 400
+        : 500;
     return new Response(JSON.stringify(body), { status });
   } finally {
     clearTimeout(timeout);
@@ -45,4 +48,3 @@ export async function POST(req: NextRequest) {
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
-

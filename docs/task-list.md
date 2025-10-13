@@ -3,15 +3,15 @@
 > Milestone labels: A Content, B UX, C Behavior, D Accessibility, E QA, F Launch
 
 ## Milestone A — Content & Copy
-- [ ] A1 Approve title & caption (“Sacred Styles” / “Where Black hair is honored.”)  
+- [x] A1 Approve title & caption (“Sacred Styles” / “Where Black hair is honored.”)  
   **Done when:** copy finalized in README and app header.
-- [ ] A2 Finalize 20 preset prompts (above)  
+- [x] A2 Finalize 20 preset prompts (above)  
   **Done when:** stored in content file; each mapped to appliesLength true/false.
-- [ ] A3 Finalize color palette (10 hex swatches)  
+- [x] A3 Finalize color palette (10 hex swatches)  
   **Done when:** names + hex map is locked.
-- [ ] A4 Finalize length options (Bob/Shoulder/Waist)  
+- [x] A4 Finalize length options (Bob/Shoulder/Waist)  
   **Done when:** which presets hide length is documented.
-- [ ] A5 Loader copy & alt text  
+- [x] A5 Loader copy & alt text  
   **Done when:** alt text approved.
 
 ## Milestone B — UX & Visual Design
@@ -88,15 +88,6 @@
 - [ ] G3 Provider client with mock + real backend toggle  
   **Done when:** local mock runs without network; prod uses provider.
 
-## Milestone T — Model Training
-- [x] T1 Training config prepared (trigger `@brie`, zip_url recorded)  
-  **Done when:** trigger chosen and `zip_url` set; noted in README or env.
-- [ ] T2 Kick off Replicate LoRA training job  
-  **Done when:** job started with base model aligned to generation model.
-- [ ] T3 Record model version and set `REPLICATE_MODEL` in `web/.env.local`  
-  **Done when:** version like `owner/model:version_hash` saved and env updated.
-- [ ] T4 Sanity-check generation (3 outputs)  
-  **Done when:** at least 3 images generate; fidelity and color acceptable.
 
 ## Milestone H — Launch & SEO
 - [ ] H1 Meta tags, Open Graph image, favicon  

@@ -1,6 +1,6 @@
-# my-replicate-app
+# Sacred Styles
 
-This is a scaffoled Node.js project structure for running AI models with [Replicate's API](https://replicate.com/docs/get-started/nodejs).
+Where Black hair is honored.
 
 ## Usage
 

@@ -19,6 +19,20 @@ const DEFAULTS = {
   lora_scale: 1
 };
 
+async function resolveModelIdentifier(rawModel: string, client: Replicate): Promise<string> {
+  // Allow env forms: "owner/model:version", "owner/model:latest", or just "owner/model"
+  const hasVersion = rawModel.includes(':') && !rawModel.endsWith(':latest');
+  if (hasVersion) return rawModel;
+
+  const slug = rawModel.replace(':latest', '');
+  const [owner, name] = slug.split('/');
+  if (!owner || !name) throw new Error('Invalid model slug; expected "owner/model"');
+  const model = await (client as any).models.get(owner, name);
+  const latestVersionId = (model as any)?.latest_version?.id;
+  if (!latestVersionId) throw new Error('Unable to resolve latest model version');
+  return `${(model as any).owner}/${(model as any).name}:${latestVersionId}`;
+}
+
 export async function runReplicate({ prompt, seed, steps, guidance, aspect, megapixels, lora_scale, signal }: RunArgs): Promise<{
   imageUrl: string;
   meta: { steps: number; guidance: number; aspect: string };
@@ -33,6 +47,9 @@ export async function runReplicate({ prompt, seed, steps, guidance, aspect, mega
 
   const replicate = new Replicate({ auth: token, userAgent: 'sacred-styles-web' });
 
+  // Support versionless or ":latest" model references by resolving to the latest version id
+  const modelIdentifier = await resolveModelIdentifier(model!, replicate);
+
   const input: Record<string, unknown> = {
     prompt,
     seed: seed ?? 89,
@@ -46,7 +63,7 @@ export async function runReplicate({ prompt, seed, steps, guidance, aspect, mega
     output_quality: 80
   };
 
-  const output = (await replicate.run(model, { input })) as any;
+  const output = (await replicate.run(modelIdentifier as any, { input })) as any;
   const first = Array.isArray(output) ? output[0] : output;
   const imageUrl: string = typeof first === 'string' ? first : first?.url?.() ?? String(first);
   return { imageUrl, meta: { steps: DEFAULTS.steps, guidance: DEFAULTS.guidance, aspect: DEFAULTS.aspect } };
