@@ -21,30 +21,30 @@
   **Done when:** documented in UX notes.
 - [x] B3 Swatch radios & length radios states (hover/focus/selected)  
   **Done when:** states defined in design notes.
-- [ ] B4 Loader concept (3 frames: silhouette → buds → bloom)  
-  **Done when:** storyboard + palette approved.
+ - [x] B4 Loader concept (3 frames: silhouette → buds → bloom)  
+   **Done when:** storyboard + palette approved.
 
 ## Milestone C — Behavior & Content Wiring
-- [ ] C1 Preset content file exists with placeholders `{trigger}`, `{length}`, `{color}`  
+- [x] C1 Preset content file exists with placeholders `{trigger}`, `{length}`, `{color}`  
   **Done when:** content stored and readable; appliesLength flags set.
-- [ ] C2 Options defined (color name→hex, length labels)  
+- [x] C2 Options defined (color name→hex, length labels)  
   **Done when:** single source of truth checked in.
-- [ ] C3 Default gen params documented (seed/steps/guidance/aspect/lora)  
+- [x] C3 Default gen params documented (seed/steps/guidance/aspect/lora)  
   **Done when:** PRD reflects final defaults; overrides noted if any.
-- [ ] C4 “Show prompt” disclosure behavior  
+- [x] C4 “Show prompt” disclosure behavior  
   **Done when:** spec says: collapsed by default; reveals assembled prompt (no seed).
 
-- [ ] C5 Prompt assembly module (+ negative prompt) with unit tests  
+- [x] C5 Prompt assembly module (+ negative prompt) with unit tests  
   **Done when:** `assemblePrompt` returns expected strings per preset; tests pass.
-- [ ] C6 API route with schema validation and timeout/retry  
+- [x] C6 API route with schema validation and timeout/retry  
   **Done when:** `/api/generate` validates input, enforces 60s timeout and 1 retry.
-- [ ] C7 Single-flight + disabled states; keep-last-image behavior  
+- [x] C7 Single-flight + disabled states; keep-last-image behavior  
   **Done when:** multiple clicks do not spawn parallel jobs; UI reflects busy state.
-- [ ] C8 Download filename convention  
+- [x] C8 Download filename convention  
   **Done when:** saves as `sacred-styles_{preset}_{color}_{length}_{timestamp}.png`.
 
 ## Milestone D — Accessibility & Respect
-- [ ] D1 Alt-text templates approved (“Portrait style: {Preset}, {Color}, {Length}”)  
+- [x] D1 Alt-text templates approved (“Portrait style: {Preset}, {Color}, {Length}”)  
   **Done when:** copy checked in.
 - [ ] D2 Keyboard flow (tab order; focus visible on radios/dropdown/buttons)  
   **Done when:** documented expectations; QA checklist updated.

@@ -23,11 +23,25 @@ export async function POST(req: NextRequest) {
     const { presetId, colorHex, length } = parsed.data;
     const preset = presets.find((p) => p.id === presetId);
     const prompt = assemblePrompt({ presetId, colorHex, length });
-    const { imageUrl, meta } = await callProvider({
-      prompt,
-      signal: controller.signal,
-      ...(preset?.overrides ?? {})
-    } as any);
+
+    async function attempt() {
+      return await callProvider({
+        prompt,
+        signal: controller.signal,
+        ...(preset?.overrides ?? {})
+      } as any);
+    }
+
+    let result;
+    try {
+      result = await attempt();
+    } catch (err) {
+      // small backoff then one retry
+      await new Promise((r) => setTimeout(r, 300));
+      result = await attempt();
+    }
+
+    const { imageUrl, meta } = result;
     return NextResponse.json({ imageUrl, promptUsed: prompt, meta });
   } catch (e) {
     const message = e instanceof Error ? e.message : 'Unknown error';

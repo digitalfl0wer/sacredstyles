@@ -33,6 +33,29 @@ Swatch & Length Radios (B3)
   - Focus-visible: 2px outline (brand color)
   - Selected: solid brand background; white text
   - Disabled (busy): reduced opacity; pointer disabled
+
+Loader Concept (B4)
+
+- Storyboard (3 frames):
+  1) Silhouette — head & shoulders silhouette of a Black woman; clean outline; calm.
+  2) Buds — small floral buds appear along hairline and crown; subtle growth.
+  3) Bloom — buds open into blooms with a soft glow; minimal petal motion.
+- Timing & Loop:
+  - Frame hold: 600ms each; crossfade/transform 200ms between frames; total ~2.2s; infinite loop.
+  - Easing: ease-in-out for transform/opacity; respect reduced motion.
+- Motion details:
+  - Tiny scale (1.0 → 1.03) and 1–2° rotation on blooms in frame 3.
+  - Opacity crossfades; no harsh pops.
+- Palette:
+  - Silhouette: #5C4632 (Deep Umber)
+  - Hair accents/leaves: #6E5B3B (Olive Brown)
+  - Blooms (primary): #C79A4B (Warm Gold)
+  - Blooms (secondary): #B88AC1 (Lavender) — optional accent
+  - Background: #F7F2EA (Cream)
+- Accessibility:
+  - `aria-live="polite"` during generation.
+  - `@media (prefers-reduced-motion: reduce)`: show Frame 1 static only.
+- Assets (to create): `web/public/loader/frame-1.svg`, `frame-2.svg`, `frame-3.svg` (flat, <10KB each).
 Drawer Interaction Spec (B2)
 
 - Default: closed
@@ -43,4 +66,10 @@ Drawer Interaction Spec (B2)
 - Focus: move focus into drawer on open (first focusable), return to toggle on close
 - Escape: closes drawer
 - ARIA: role="dialog", aria-modal="true", aria-label="Generated output"
+
+Alt Text Template (D1)
+
+- Pattern: "Portrait style: {Preset}, {Color}, {Length}"
+- Applied in UI: Output image `alt` uses preset name, selected color hex, and length (when applicable).
+- Fallbacks: If any part is missing, substitute with generic label (e.g., "Style", "Color").
 

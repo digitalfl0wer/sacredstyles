@@ -163,7 +163,7 @@ export const presets: Preset[] = [
     name: 'Afro Halo Puff',
     template:
       'portrait of {trigger}, woman, afro puff halo, soft rounded shape, coil definition at edges, natural hairline, {color}, soft sheen',
-    trigger: '@brie',
+    trigger: '@briez',
     appliesLength: false
   },
   {
@@ -171,7 +171,7 @@ export const presets: Preset[] = [
     name: 'Low Taper Fade + Waves',
     template:
       'portrait of {trigger}, woman, low taper fade with 360 waves, crisp lineup, clean edges, natural hairline, {color}, matte finish',
-    trigger: '@brie',
+    trigger: '@briez',
     appliesLength: false
   }
 ];
