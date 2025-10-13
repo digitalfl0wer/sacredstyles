@@ -1,0 +1,120 @@
+"use client";
+import { useEffect, useState } from 'react';
+import { presets } from '@/content/presets';
+import { colors, lengths } from '@/content/options';
+import { setOutput, subscribe } from '@/lib/store';
+
+export function Controls() {
+  const [presetId, setPresetId] = useState(presets[0]?.id ?? '');
+  const [colorHex, setColorHex] = useState(colors[0]?.hex ?? '#0D0D0D');
+  const [length, setLength] = useState<'bob' | 'shoulder' | 'waist'>('shoulder');
+  const [busy, setBusy] = useState(false);
+
+  const preset = presets.find((p) => p.id === presetId);
+  const showLength = Boolean(preset?.appliesLength);
+
+  async function onGenerate() {
+    if (busy) return;
+    setBusy(true);
+    try {
+      const res = await fetch('/api/generate', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ presetId, colorHex, length })
+      });
+      if (res.ok) {
+        const data = (await res.json()) as { imageUrl: string; promptUsed: string };
+        setOutput({
+          imageUrl: data.imageUrl,
+          prompt: data.promptUsed,
+          meta: { presetId, presetName: preset?.name ?? null, colorHex, length }
+        });
+      }
+    } finally {
+      setBusy(false);
+    }
+  }
+
+  return (
+    <form onSubmit={(e) => e.preventDefault()} aria-busy={busy}>
+      <label>
+        Style
+        <select value={presetId} onChange={(e) => setPresetId(e.target.value)} disabled={busy}>
+          {presets.map((p) => (
+            <option key={p.id} value={p.id}>
+              {p.name}
+            </option>
+          ))}
+        </select>
+      </label>
+
+      <fieldset style={{ marginTop: 12 }}>
+        <legend>Color</legend>
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
+          {colors.map((c) => (
+            <label key={c.hex} style={{ display: 'inline-flex', alignItems: 'center', gap: 6 }}>
+              <input
+                type="radio"
+                name="color"
+                value={c.hex}
+                checked={colorHex === c.hex}
+                onChange={() => setColorHex(c.hex)}
+                disabled={busy}
+              />
+              <span
+                aria-hidden
+                style={{ width: 16, height: 16, background: c.hex, borderRadius: '50%' }}
+              />
+              {c.name}
+            </label>
+          ))}
+        </div>
+      </fieldset>
+
+      {showLength && (
+        <fieldset style={{ marginTop: 12 }}>
+          <legend>Length</legend>
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
+            {lengths.map((l) => (
+              <label key={l.id} style={{ display: 'inline-flex', alignItems: 'center', gap: 6 }}>
+                <input
+                  type="radio"
+                  name="length"
+                  value={l.id}
+                  checked={length === l.id}
+                  onChange={() => setLength(l.id as any)}
+                  disabled={busy}
+                />
+                {l.label}
+              </label>
+            ))}
+          </div>
+        </fieldset>
+      )}
+
+      <div style={{ display: 'flex', gap: 12, marginTop: 16 }}>
+        <button type="button" onClick={onGenerate} disabled={busy}>
+          {busy ? 'Generating…' : 'Generate'}
+        </button>
+        <details>
+          <summary>Show prompt</summary>
+          <PromptPreview />
+        </details>
+      </div>
+    </form>
+  );
+}
+
+function PromptPreview() {
+  const [prompt, setPrompt] = useState<string | null>(null);
+  useEffect(() => {
+    const unsub = subscribeOutput((s) => setPrompt(s.prompt));
+    return unsub;
+  }, []);
+  return <p style={{ maxWidth: 320, whiteSpace: 'pre-wrap' }}>{prompt ?? 'Prompt will appear here.'}</p>;
+}
+
+function subscribeOutput(cb: (s: { prompt: string | null }) => void) {
+  return subscribe((s) => cb({ prompt: s.prompt }));
+}
+

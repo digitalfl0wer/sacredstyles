@@ -1,0 +1,13 @@
+node_modules
+.env
+.npmrc
+.env.local.env
+.env.*
+web/.env.local
+*.pem
+*.key
+.env
+.env.*
+web/.env.local
+*.pem
+*.key
