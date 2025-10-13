@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useRef, useState } from 'react';
+import Image from 'next/image';
 import { subscribe } from '@/lib/store';
 
 export function OutputDrawer() {
@@ -24,10 +25,13 @@ export function OutputDrawer() {
   }, [open]);
 
   useEffect(() => {
-    return subscribe((s) => {
+    const unsub = subscribe((s) => {
       setImageUrl(s.imageUrl);
       setMeta({ presetName: s.meta.presetName, colorHex: s.meta.colorHex, length: s.meta.length });
     });
+    return () => {
+      unsub();
+    };
   }, []);
 
   return (
@@ -49,9 +53,12 @@ export function OutputDrawer() {
             <div aria-live="polite">Generating portrait… Please wait.</div>
           ) : (
             <div>
-              <img
+              <Image
                 src={imageUrl}
                 alt={`Portrait style: ${meta?.presetName ?? 'Style'}, ${meta?.colorHex ?? 'Color'}${meta?.length ? `, ${meta?.length}` : ''}`}
+                width={1024}
+                height={1024}
+                unoptimized
                 style={{ maxWidth: '100%' }}
               />
               <div style={{ marginTop: 8 }}>

@@ -15,9 +15,9 @@
   **Done when:** alt text approved.
 
 ## Milestone B — UX & Visual Design
-- [ ] B1 Layout decisions documented (side controls, output drawer closed by default)  
+- [x] B1 Layout decisions documented (side controls, output drawer closed by default)  
   **Done when:** wireframe notes committed.
-- [ ] B2 Drawer interaction spec (open/close animation timing & easing)  
+- [x] B2 Drawer interaction spec (open/close animation timing & easing)  
   **Done when:** documented in UX notes.
 - [ ] B3 Swatch radios & length radios states (hover/focus/selected)  
   **Done when:** states defined in design notes.
