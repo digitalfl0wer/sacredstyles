@@ -19,7 +19,7 @@
   **Done when:** wireframe notes committed.
 - [x] B2 Drawer interaction spec (open/close animation timing & easing)  
   **Done when:** documented in UX notes.
-- [ ] B3 Swatch radios & length radios states (hover/focus/selected)  
+- [x] B3 Swatch radios & length radios states (hover/focus/selected)  
   **Done when:** states defined in design notes.
 - [ ] B4 Loader concept (3 frames: silhouette → buds → bloom)  
   **Done when:** storyboard + palette approved.

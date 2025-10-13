@@ -52,19 +52,18 @@ export function Controls() {
         <legend>Color</legend>
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
           {colors.map((c) => (
-            <label key={c.hex} style={{ display: 'inline-flex', alignItems: 'center', gap: 6 }}>
+            <label key={c.hex} className="swatch-label">
               <input
+                className="swatch-input"
                 type="radio"
                 name="color"
                 value={c.hex}
                 checked={colorHex === c.hex}
                 onChange={() => setColorHex(c.hex)}
                 disabled={busy}
+                style={{ appearance: 'none', position: 'absolute', opacity: 0, pointerEvents: 'none' }}
               />
-              <span
-                aria-hidden
-                style={{ width: 16, height: 16, background: c.hex, borderRadius: '50%' }}
-              />
+              <span aria-hidden className="swatch-dot" style={{ background: c.hex }} />
               {c.name}
             </label>
           ))}
@@ -76,17 +75,20 @@ export function Controls() {
           <legend>Length</legend>
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
             {lengths.map((l) => (
-              <label key={l.id} style={{ display: 'inline-flex', alignItems: 'center', gap: 6 }}>
+              <div key={l.id}>
                 <input
+                  className="length-input"
+                  id={`length-${l.id}`}
                   type="radio"
                   name="length"
                   value={l.id}
                   checked={length === l.id}
                   onChange={() => setLength(l.id as any)}
                   disabled={busy}
+                  style={{ appearance: 'none', position: 'absolute', opacity: 0, pointerEvents: 'none' }}
                 />
-                {l.label}
-              </label>
+                <label htmlFor={`length-${l.id}`} className="length-label">{l.label}</label>
+              </div>
             ))}
           </div>
         </fieldset>
