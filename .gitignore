@@ -11,3 +11,13 @@ web/.env.local
 web/.env.local
 *.pem
 *.key
+.next
+.vercel
+.DS_Store
+npm-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+*.log
+dist
+coverage
+out
