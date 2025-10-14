@@ -15,6 +15,9 @@ function pickLengthForPreset(preset: Preset): 'bob' | 'shoulder' | 'waist' | und
 }
 
 export async function GET() {
+  if (process.env.VERCEL_BUILD_OUTPUT) {
+    return NextResponse.json({ ok: false, error: 'Test endpoint disabled during build' }, { status: 503 });
+  }
   if (process.env.ALLOW_TEST_ENDPOINTS !== 'true') {
     return NextResponse.json({ ok: false, error: 'Test endpoint disabled. Set ALLOW_TEST_ENDPOINTS=true to enable.' }, { status: 403 });
   }
@@ -92,4 +95,3 @@ export async function GET() {
 }
 
 export const runtime = 'nodejs';
-

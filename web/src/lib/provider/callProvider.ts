@@ -22,6 +22,9 @@ export async function callProvider({
   imageUrl: string;
   meta: { steps: number; guidance: number; aspect: string };
 }> {
+  if (process.env.VERCEL_BUILD_OUTPUT) {
+    throw new Error('Generation disabled during build step');
+  }
   const provider = process.env.NEXT_PUBLIC_GEN_PROVIDER ?? 'mock';
   console.log('[provider] selected:', provider);
   if (provider === 'mock') {

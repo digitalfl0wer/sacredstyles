@@ -6,6 +6,9 @@ import { callProvider } from '@/lib/provider/callProvider';
 export async function POST(req: NextRequest) {
   // Optional simple guard for manual/local use
   const adminToken = process.env.ADMIN_TOKEN;
+  if (process.env.VERCEL_BUILD_OUTPUT) {
+    return NextResponse.json({ error: 'Admin capture disabled during build' }, { status: 503 });
+  }
   if (!adminToken) {
     return NextResponse.json({ error: 'Admin capture disabled. Set ADMIN_TOKEN to enable.' }, { status: 403 });
   }
@@ -53,4 +56,3 @@ export async function POST(req: NextRequest) {
 }
 
 export const runtime = 'nodejs';
-

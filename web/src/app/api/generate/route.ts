@@ -23,7 +23,7 @@ export async function POST(req: NextRequest) {
   try {
     const { presetId, colorHex, length } = parsed.data;
     const preset = presets.find((p) => p.id === presetId);
-    if (process.env.NEXT_PHASE === 'phase-production-build') {
+    if (process.env.NEXT_PHASE === 'phase-production-build' || process.env.VERCEL_BUILD_OUTPUT) {
       return NextResponse.json({ error: 'Generation disabled during build' }, { status: 503 });
     }
     const prompt = assemblePrompt({ presetId, colorHex, length });
