@@ -15,6 +15,9 @@ function pickLengthForPreset(preset: Preset): 'bob' | 'shoulder' | 'waist' | und
 }
 
 export async function GET() {
+  if (process.env.ALLOW_TEST_ENDPOINTS !== 'true') {
+    return NextResponse.json({ ok: false, error: 'Test endpoint disabled. Set ALLOW_TEST_ENDPOINTS=true to enable.' }, { status: 403 });
+  }
   const results: CheckResult[] = [];
   const provider = process.env.NEXT_PUBLIC_GEN_PROVIDER ?? 'mock';
 
@@ -89,5 +92,4 @@ export async function GET() {
 }
 
 export const runtime = 'nodejs';
-
 

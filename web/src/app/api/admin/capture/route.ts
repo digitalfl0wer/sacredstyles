@@ -6,10 +6,11 @@ import { callProvider } from '@/lib/provider/callProvider';
 export async function POST(req: NextRequest) {
   // Optional simple guard for manual/local use
   const adminToken = process.env.ADMIN_TOKEN;
-  if (adminToken) {
-    const header = req.headers.get('x-admin-token');
-    if (header !== adminToken) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+  if (!adminToken) {
+    return NextResponse.json({ error: 'Admin capture disabled. Set ADMIN_TOKEN to enable.' }, { status: 403 });
   }
+  const header = req.headers.get('x-admin-token');
+  if (header !== adminToken) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
 
   const body = (await req.json().catch(() => ({}))) as {
     items?: Array<{ presetId: string; colorHex: string; length?: 'bob' | 'shoulder' | 'waist' }>;
@@ -52,5 +53,4 @@ export async function POST(req: NextRequest) {
 }
 
 export const runtime = 'nodejs';
-
 
