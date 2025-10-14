@@ -46,31 +46,31 @@
 ## Milestone D — Accessibility & Respect
 - [x] D1 Alt-text templates approved (“Portrait style: {Preset}, {Color}, {Length}”)  
   **Done when:** copy checked in.
-- [ ] D2 Keyboard flow (tab order; focus visible on radios/dropdown/buttons)  
+- [x] D2 Keyboard flow (tab order; focus visible on radios/dropdown/buttons)  
   **Done when:** documented expectations; QA checklist updated.
-- [ ] D3 Language check for cultural sensitivity  
+- [x] D3 Language check for cultural sensitivity  
   **Done when:** preset names/copy reviewed.
 
-- [ ] D4 Drawer focus trap + `aria-live` for loader; reduced motion  
+- [x] D4 Drawer focus trap + `aria-live` for loader; reduced motion  
   **Done when:** focus trapped while open; loader announcements and motion fallbacks verified.
 
 ## Milestone E — QA & Acceptance
-- [ ] E1 Drawer default state & toggle  
+- [x] E1 Drawer default state & toggle  
   **Done when:** starts closed; toggles smoothly.
-- [ ] E2 Loader loop  
+- [x] E2 Loader loop  
   **Done when:** 3-frame loop plays while generating; stops on result.
-- [ ] E3 Presets generate  
+- [x] E3 Presets generate  
   **Done when:** each of 20 presets yields a result at least once.
-- [ ] E4 Options affect output  
+- [x] E4 Options affect output  
   **Done when:** color/length changes reflected in results; no silent failures.
-- [ ] E5 Show prompt  
+- [x] E5 Show prompt  
   **Done when:** reveals correct assembled prompt string; seed not shown.
-- [ ] E6 Download  
+- [x] E6 Download  
   **Done when:** button saves displayed image.
-- [ ] E7 Error handling  
+- [x] E7 Error handling  
   **Done when:** friendly inline message; prior selections preserved.
 
-- [ ] E8 Cross-browser/device matrix + basic perf timing  
+- [x] E8 Cross-browser/device matrix + basic perf timing  
   **Done when:** Chrome/Safari/Firefox and key viewports validated; timing logged.
 - [ ] E9 Snapshot fixtures for 6–8 showcase outputs  
   **Done when:** fixtures captured and documented (ties to F3).

@@ -3,16 +3,19 @@ import { OutputDrawer } from '@/components/OutputDrawer';
 
 export default function HomePage() {
   return (
-    <main style={{ display: 'grid', gridTemplateColumns: '340px 1fr', minHeight: '100vh' }}>
-      <aside style={{ padding: 24, borderRight: '1px solid #e5e5e5' }}>
-        <h1 style={{ margin: 0 }}>Sacred Styles</h1>
-        <p style={{ marginTop: 4 }}>Where Black hair is honored.</p>
-        <Controls />
-      </aside>
-      <section>
-        <OutputDrawer />
-      </section>
+    <main className="home-shell">
+      <div className="home-layout">
+        <aside className="control-panel">
+          <div className="brand-lockup">
+            <h1>Sacred Styles</h1>
+            <p>Where Black hair is honored.</p>
+          </div>
+          <Controls />
+        </aside>
+        <section className="preview-panel">
+          <OutputDrawer />
+        </section>
+      </div>
     </main>
   );
 }
-

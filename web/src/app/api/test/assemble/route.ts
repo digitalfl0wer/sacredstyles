@@ -5,6 +5,7 @@ import { negativePrompt } from '@/lib/prompt/negativePrompt';
 
 export async function GET() {
   const results: Array<{ name: string; ok: boolean; details?: string }> = [];
+  const negativeEnabled = (process.env.NEXT_PUBLIC_DISABLE_NEGATIVE_PROMPT ?? '').toLowerCase() !== 'true';
 
   function add(name: string, fn: () => void) {
     try {
@@ -24,7 +25,8 @@ export async function GET() {
     if (!out.includes(preset.trigger)) throw new Error('missing trigger');
     if (!out.includes(color)) throw new Error('missing color');
     if (!out.includes('waist')) throw new Error('missing length');
-    if (!out.includes(negativePrompt)) throw new Error('missing negative prompt');
+    if (negativeEnabled && !out.includes(negativePrompt)) throw new Error('missing negative prompt');
+    if (!negativeEnabled && out.includes(negativePrompt)) throw new Error('negative prompt should be disabled');
   });
 
   add('omits length token for length-disabled preset', () => {
@@ -46,4 +48,3 @@ export async function GET() {
 }
 
 export const runtime = 'nodejs';
-

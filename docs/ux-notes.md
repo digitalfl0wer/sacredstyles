@@ -73,3 +73,22 @@ Alt Text Template (D1)
 - Applied in UI: Output image `alt` uses preset name, selected color hex, and length (when applicable).
 - Fallbacks: If any part is missing, substitute with generic label (e.g., "Style", "Color").
 
+Keyboard Flow (D2)
+
+- Tab order: Title → Style select → Color group → Length group (if visible) → Generate → Show prompt → Output toggle → (when open) Drawer content
+- Radios: arrow keys move within the group; Tab enters/leaves group; focus visibly outlined
+- Drawer: focus moves to first control inside on open; Esc closes and returns focus to toggle
+- Error: focus moves to inline error if present
+
+QA checklist:
+- Can tab to each control and see a visible focus ring
+- Arrow keys cycle color swatches and length radios
+- Space/Enter activates Generate and toggle buttons
+- Esc closes the drawer and returns focus to the toggle
+
+Language Review (D3)
+
+- Style names are technique-first, respectful, and avoid exoticizing terminology.
+- Prompts avoid loaded adjectives; focus on technique, texture, parts, and lighting.
+- Replace or remove any terms that suggest fetishization or disrespect.
+

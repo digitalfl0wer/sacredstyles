@@ -11,6 +11,7 @@ const BodySchema = z.object({
 });
 
 export async function POST(req: NextRequest) {
+  const start = Date.now();
   const json = await req.json().catch(() => null);
   const parsed = BodySchema.safeParse(json);
   if (!parsed.success) {
@@ -28,6 +29,7 @@ export async function POST(req: NextRequest) {
       return await callProvider({
         prompt,
         signal: controller.signal,
+        aspect: '3:4',
         ...(preset?.overrides ?? {})
       } as any);
     }
@@ -42,10 +44,13 @@ export async function POST(req: NextRequest) {
     }
 
     const { imageUrl, meta } = result;
-    return NextResponse.json({ imageUrl, promptUsed: prompt, meta });
+    const durationMs = Date.now() - start;
+    console.log('[generate] ok', { durationMs });
+    return NextResponse.json({ imageUrl, promptUsed: prompt, meta, durationMs });
   } catch (e) {
     const message = e instanceof Error ? e.message : 'Unknown error';
-    console.error('Generation failed:', message);
+    const durationMs = Date.now() - start;
+    console.error('Generation failed:', message, { durationMs });
     const body =
       process.env.NODE_ENV !== 'production'
         ? { error: 'Generation failed', details: message }

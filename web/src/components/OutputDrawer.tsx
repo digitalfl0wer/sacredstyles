@@ -4,11 +4,10 @@ import Image from 'next/image';
 import { subscribe } from '@/lib/store';
 
 export function OutputDrawer() {
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(true);
   const [imageUrl, setImageUrl] = useState<string | null>(null);
   const [meta, setMeta] = useState<{ presetName: string | null; colorHex: string | null; length: any } | null>(null);
   const triggerRef = useRef<HTMLButtonElement>(null);
-  const drawerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     function onKey(e: KeyboardEvent) {
@@ -35,42 +34,56 @@ export function OutputDrawer() {
   }, []);
 
   return (
-    <div>
-      <div style={{ padding: 16, borderBottom: '1px solid #e5e5e5' }}>
-        <button ref={triggerRef} onClick={() => setOpen((v) => !v)} aria-expanded={open} >
-          {open ? 'Hide Output' : 'Show Output'}
+    <section className="output-shell" aria-label="Generated output">
+      <div className="output-header">
+        <div>
+          <h2>Latest portrait</h2>
+          {meta?.presetName && (
+            <p className="output-meta">
+              {meta.presetName}
+              {meta.colorHex ? ` • ${meta.colorHex}` : ''}
+              {meta.length ? ` • ${meta.length}` : ''}
+            </p>
+          )}
+        </div>
+        <button
+          ref={triggerRef}
+          onClick={() => setOpen((v) => !v)}
+          aria-expanded={open}
+          className="ghost-button"
+          type="button"
+        >
+          {open ? 'Hide' : 'Show'}
         </button>
       </div>
       {open && (
-        <div
-          ref={drawerRef}
-          role="dialog"
-          aria-modal="true"
-          aria-label="Generated output"
-          style={{ padding: 24 }}
-        >
+        <div className="output-body">
           {!imageUrl ? (
-            <div aria-live="polite">Generating portrait… Please wait.</div>
+            <div className="output-placeholder" aria-live="polite">
+              Generating portrait… Please wait.
+            </div>
           ) : (
-            <div>
-              <Image
-                src={imageUrl}
-                alt={`Portrait style: ${meta?.presetName ?? 'Style'}, ${meta?.colorHex ?? 'Color'}${meta?.length ? `, ${meta?.length}` : ''}`}
-                width={1024}
-                height={1024}
-                unoptimized
-                style={{ maxWidth: '100%' }}
-              />
-              <div style={{ marginTop: 8 }}>
-                <button type="button" onClick={() => download(imageUrl!, meta)}>
-                  Download
+            <>
+              <div className="output-frame">
+                <Image
+                  src={imageUrl}
+                  alt={`Portrait style: ${meta?.presetName ?? 'Style'}, ${meta?.colorHex ?? 'Color'}${meta?.length ? `, ${meta?.length}` : ''}`}
+                  width={768}
+                  height={1024}
+                  unoptimized
+                  priority
+                />
+              </div>
+              <div className="output-actions">
+                <button className="primary-button" type="button" onClick={() => download(imageUrl!, meta)}>
+                  Download portrait
                 </button>
               </div>
-            </div>
+            </>
           )}
         </div>
       )}
-    </div>
+    </section>
   );
 }
 
@@ -87,4 +100,3 @@ function download(url: string, meta: { presetName: string | null; colorHex: stri
   a.click();
   a.remove();
 }
-

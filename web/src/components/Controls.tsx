@@ -9,6 +9,7 @@ export function Controls() {
   const [colorHex, setColorHex] = useState(colors[0]?.hex ?? '#0D0D0D');
   const [length, setLength] = useState<'bob' | 'shoulder' | 'waist'>('shoulder');
   const [busy, setBusy] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   const preset = presets.find((p) => p.id === presetId);
   const showLength = Boolean(preset?.appliesLength);
@@ -16,6 +17,7 @@ export function Controls() {
   async function onGenerate() {
     if (busy) return;
     setBusy(true);
+    setError(null);
     try {
       const res = await fetch('/api/generate', {
         method: 'POST',
@@ -29,6 +31,9 @@ export function Controls() {
           prompt: data.promptUsed,
           meta: { presetId, presetName: preset?.name ?? null, colorHex, length }
         });
+      } else {
+        const body = (await res.json().catch(() => ({}))) as any;
+        setError(body?.error ?? 'Something went off. Try Generate again.');
       }
     } finally {
       setBusy(false);
@@ -95,7 +100,7 @@ export function Controls() {
       )}
 
       <div style={{ display: 'flex', gap: 12, marginTop: 16 }}>
-        <button type="button" onClick={onGenerate} disabled={busy}>
+        <button className="primary-button" type="button" onClick={onGenerate} disabled={busy}>
           {busy ? 'Generating…' : 'Generate'}
         </button>
         <details>
@@ -103,6 +108,11 @@ export function Controls() {
           <PromptPreview />
         </details>
       </div>
+      {error && (
+        <div role="status" aria-live="polite" style={{ color: '#7b2d2d', marginTop: 8 }}>
+          {error}
+        </div>
+      )}
     </form>
   );
 }
@@ -119,4 +129,3 @@ function PromptPreview() {
 function subscribeOutput(cb: (s: { prompt: string | null }) => void) {
   return subscribe((s) => cb({ prompt: s.prompt }));
 }
-
