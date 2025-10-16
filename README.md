@@ -1,19 +1,21 @@
+
 # Sacred Styles
 
-Where Black hair is honored.
+An AI style studio that celebrates Black hair—simple, fast, and respectful.
 
-## Usage
+> ✊🏾 Centering texture, culture, and creativity.
 
-To get started, you'll need Node.js 18 or later. The simplest way to install it is using the installer at [nodejs.org](https://nodejs.org/).
+Ode to Black Hair.
+To the braiders, loc gods, twist queens, silk-press artists, and every DIY wash-day pro—your craft is culture. Sacred Styles is a small love letter to the hands, history, and imagination behind every look.
 
-Next, grab a Replicate API token from [replicate.com/account](http://replicate.com/account) and set it as an environment variable:
+## Features 
 
-```console
-export REPLICATE_API_TOKEN=...
-```
+* **Preset selector:** choose a style from a **dropdown** (braids, locs, twists, silk press, fro, TWA, blowout).
+* **Options:** inline **radio buttons** for **length**, **density**, and **color accents**.
+* **Color strip:** quick-select swatches in the **sidebar**.
+* **Show Prompt:** stays **collapsed**
 
-Then run your app:
 
-```console
-npm start
-```
+
+---
+
